@@ -1,0 +1,22 @@
+# LTspice generated output
+*.raw
+*.log
+*.net
+*.plt
+*.fra
+*.bak
+*.backup
+*.tmp
+
+# KiCad 
+*-backups/
+*.kicad_prl
+fp-info-cache
+_autosave-*
+*.lck
+*.kicad_pcb-bak
+*.kicad_sch-bak
+
+# Editor / OS junk
+.DS_Store
+Thumbs.db
