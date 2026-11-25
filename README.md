@@ -2,6 +2,12 @@
 
 An independent engineering project focused on the design, simulation, prototyping, and implementation of a low-distortion stereo headphone amplifier optimized for high-impedance headphones.
 
+![Revision 2 breadboard prototype](images/rev2-breadboard.jpg)
+
+*Revision 2 single-channel breadboard prototype following
+successful DC operating point and initial thermal stability
+validation.*
+
 ## Overview
 
 The amplifier combines an NE5532 operational amplifier with a discrete complementary Class AB output stage utilizing BD139 and BD140 bipolar junction transistors.
@@ -19,25 +25,28 @@ The current design is optimized around the Sennheiser HD 600 and its nominal imp
 | Nominal load impedance | 300 Ω |
 | Supply voltage | ±12 V DC |
 | Frequency response | 20 Hz – 20 kHz |
-| Maximum output voltage | 5 V RMS |
+| Rated output voltage | 5 V RMS |
 | Output power at 300 Ω | 83 mW per channel |
 | Output current at rated load | 16.7 mA RMS |
-| Output impedance | < 1 Ω |
-| Selectable gain | 1× / 3× |
-| Quiescent current | Adjustable, initially targeting 5 mA |
+| Output impedance | Approximately 10 Ω |
+| Voltage gain | 2× nominal |
+| Quiescent current | Adjustable, targeting 5 mA |
 | DC output offset | < 5 mV |
 | THD+N | < 0.01% |
 
-These specifications represent design targets rather than verified performance measurements.
+These specifications represent design objectives rather than verified final hardware performance.
 
 ## Circuit Architecture
 
 - NE5532 operational amplifier voltage gain stage
 - BD139/BD140 complementary emitter-follower output stage
-- Adjustable VBE multiplier for quiescent current control (in development)
-- Emitter degeneration for improved bias stability
+- Adjustable 2N3904 VBE multiplier for quiescent current control
+- 5 Ω emitter degeneration resistors for improved bias stability
+- 47 Ω base stopper resistors
+- 10 Ω output isolation resistor for improved capacitive-load stability
 - Global negative feedback
 - Dual-rail DC power supply
+- Local power supply decoupling
 
 ## Design Revisions
 
@@ -49,14 +58,55 @@ Circuit simulation and breadboard experimentation identified limitations in quie
 
 ### Rev 2.0 — High-Impedance Redesign
 
-The second revision targets a nominal 300 Ω headphone load and focuses on:
+The second revision targets a nominal 300 Ω headphone load and introduces:
 
-- Adjustable quiescent current
-- Improved thermal stability
-- Reduced crossover distortion
+- Adjustable quiescent current through a VBE multiplier
 - Increased emitter degeneration
-- Low output impedance
-- Improved voltage swing and linearity
+- Improved thermal behaviour
+- Base stopper resistors for improved high-frequency stability
+- Output isolation for capacitive-load stability
+- Characterization of voltage swing, harmonic distortion, and overload recovery
+
+Initial hardware testing identified differences between simulated and physical transistor bias characteristics. The bias adjustment range was subsequently extended, allowing the intended quiescent current to be established without altering the fundamental amplifier topology.
+
+## Preliminary Validation Results
+
+### Simulation
+
+The Revision 2 circuit has undergone LTspice characterization, including:
+
+- DC operating point analysis
+- Uniform and differential temperature sweeps
+- Transient response analysis
+- Harmonic distortion analysis
+- Maximum output voltage characterization
+- AC frequency response analysis
+- Output impedance characterization
+- Noise analysis
+- Capacitive-load stability testing
+- Square-wave response
+- Overload behaviour and recovery
+
+Simulation results informed component selection and design modifications prior to physical implementation. Some measurements were performed on intermediate configurations and remain subject to confirmation using the finalized circuit.
+
+### Physical Prototype
+
+Initial DC validation of the single-channel Revision 2 breadboard prototype has been completed.
+
+| Parameter | Measured Result |
+|---|---:|
+| Initial quiescent current | 5.02 mA |
+| Warm NPN quiescent current | 5.26 mA |
+| Warm PNP quiescent current | 5.24 mA |
+| Positive rail idle current | Approximately 13 mA |
+| Negative rail idle current | Approximately 13 mA |
+| DC output offset | 0 mV displayed |
+| Thermal settling time | Approximately 4 minutes |
+| Quiescent current drift over 10 minutes | +5.62% |
+
+Quiescent currents were calculated using measured voltage drops across the nominal 5 Ω emitter resistors.
+
+The prototype demonstrated stable idle behaviour during a 10-minute warm-up test. Physical AC performance, high-frequency stability, and distortion remain to be characterized.
 
 ## Development Roadmap
 
@@ -66,10 +116,15 @@ The second revision targets a nominal 300 Ω headphone load and focuses on:
 - [x] Integrate voltage and current amplification stages
 - [x] Construct initial single-channel breadboard prototype
 - [x] Investigate limitations of initial biasing network
-- [ ] Implement adjustable biasing network
-- [ ] Validate operating point and thermal stability
-- [ ] Characterize frequency response and distortion
-- [ ] Validate revised single-channel breadboard prototype
+- [x] Implement adjustable biasing network
+- [x] Perform initial simulation characterization
+- [x] Construct revised single-channel breadboard prototype
+- [x] Establish physical DC operating point
+- [x] Perform initial idle thermal stability testing
+- [ ] Verify hardware stability using an oscilloscope
+- [ ] Characterize physical AC performance
+- [ ] Validate frequency response, output power, and distortion
+- [ ] Conduct headphone listening tests
 - [ ] Develop stereo amplifier circuit
 - [ ] Design custom PCB in KiCad
 - [ ] Manufacture and assemble PCB
@@ -98,9 +153,13 @@ The second revision targets a nominal 300 Ω headphone load and focuses on:
 
 ## Project Status
 
-**Rev 2.0 — In Development | November 2026**
+**Rev 2.0 — Hardware Validation | November 2026**
 
-The initial amplifier topology has been simulated and prototyped. Current development focuses on redesigning the transistor biasing network to achieve predictable quiescent current, improved thermal stability, and reliable operation into a 300 Ω load.
+Initial simulation characterization and physical DC validation of the revised single-channel amplifier have been completed.
+
+The adjustable bias network has been calibrated to approximately 5 mA of quiescent current, with preliminary testing demonstrating stable idle operation and negligible measured DC output offset.
+
+Current development focuses on physical AC characterization, high-frequency stability verification, and performance testing into a nominal 300 Ω load prior to stereo implementation and PCB development.
 
 ## License
 
