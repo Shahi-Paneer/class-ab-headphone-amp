@@ -2,7 +2,7 @@
 
 An independent engineering project focused on the design, simulation, prototyping, and implementation of a low-distortion stereo headphone amplifier optimized for high-impedance headphones.
 
-![Revision 2 breadboard prototype](images/rev2-breadboard.jpg)
+![Revision 2 breadboard prototype](docs/images/rev2-breadboard.jpg)
 
 *Revision 2 single-channel breadboard prototype following
 successful DC operating point and initial thermal stability
